@@ -5,6 +5,6 @@ OrderedDict = "cfd1ef55-9d35-4cc0-9788-b3a5c0326929"
 
 [package]
 name = "Outdoors"
-uuid = "d3598698-a7e3-42d2-87cb-a7a1f294c746" # Généré automatiquement
+uuid = "d3598698-a7e3-42d2-87cb-a7a1f294c746"
 version = "1.5.0"
 authors = ["Kaptue Lael <gesee37@gmail.com>"]
