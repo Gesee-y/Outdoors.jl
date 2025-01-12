@@ -2,13 +2,9 @@
 
 module Outdoors
 
-include("..\\Utilities\\Observers\\OBS.jl")
-include("..\\Utilities\\NodeTree\\NodeTree.jl")
-include("..\\Utilities\\OrderedDict.jl")
-
-using .OrderedDict
-using .Notifyers
-using .NodeTree
+using OrderedDict
+using Notifyers
+using NodeTree
 
 export NOTIF_WINDOW_CREATED, NOTIF_WINDOW_UPDATED, NOTIF_WINDOW_EXITTED, NOTIF_WINDOW_TITLE_CHANGED
 export NOTIF_WINDOW_REPOSITIONED, NOTIF_WINDOW_RESIZED, NOTIF_WINDOW_FULLSCREEN, NOTIF_WINDOW_MINIMIZED
