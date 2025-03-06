@@ -37,7 +37,7 @@ julia> Pkg.add(url="https://github.com/Gesee-y/Outdoors.jl.git")
 ## Features
 
    * Abstraction for SDL2/GLFW/...
-   * Provide an easy interface to implement new window style
+   * Provide an easy interface for implementing new window style
    * Events management 
    * A generalized window hierarchy ( a window can be the sub window of another one, even if they don't use the same API)
 
@@ -52,7 +52,7 @@ Outdoors.connect(NOTIF_ERROR) do msg,err
         error(msg*err)
 end
 
-# to know went to exit the event loop
+# to know when to exit the event loop
 const Close = Ref(false)
 
 # will call this function when all windows will be closed
