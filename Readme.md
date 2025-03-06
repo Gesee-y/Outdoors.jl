@@ -4,12 +4,12 @@ Title: ReadMe
 Author: Talom Laël
 ...
 
-# Outdoors 
+# Outdoors.jl
 
 ## Quick start
 
 ```julia
-Pkg.add("Outdoors.jl")
+Pkg.add("Outdoors")
 using Outdoors
 ```
 ## Intro
@@ -17,7 +17,7 @@ using Outdoors
 For modern GUI application, switching between multiple API(Application Programming Interface) while reducing dependencies is a plus
 
 Outdoors is made for that purpose.
-It's a module to manage the window of the app. It's mean to be an abstraction for different API like [SDL2](https://www.libsdl.org) or [GLFW](https://www.glfw.org) while providing an easy way to add new one. It uses the [Notifyers.jl](https://github.com/Gesee-y/Notifyers.jl) package, allowing reactiveness for each API.
+It's a module to manage the window of the app. It's meant to be an abstraction for different API like [SDL2](https://www.libsdl.org) or [GLFW](https://www.glfw.org) while providing an easy way to add new one. It uses the [Notifyers.jl](https://github.com/Gesee-y/Notifyers.jl) package, allowing reactiveness for each API.
 
 ## Installation 
 
