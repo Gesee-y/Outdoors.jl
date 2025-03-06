@@ -75,7 +75,7 @@ QuitStyle(SDLStyle)
 
 ## License 
 
-This package is under the MIT license, for more information see [License](https://github.com/Gesee-y/Outdoors.jl/blob/main/LICENSE)
+This package is under the MIT license, for more information see [License](https://github.com/Gesee-y/Outdoors.jl/blob/main/LICENSE.txt)
 
 ## Contribution
 
