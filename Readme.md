@@ -55,4 +55,14 @@ end
 
 InitOutdoor(SDLStyle)
 app = ODApp()
+
+win = CreateWindow(app,SDLStyle,"Outdoor Test",640,480)
+
+while !Close[]
+        GetEvents(win)
+        yield()
+end
+
+QuitWindow(win)
+QuitStyle(SDLStyle)
 ```
