@@ -53,6 +53,12 @@ Outdoors.connect(NOTIF_ERROR) do msg,err
         error(msg*err)
 end
 
+const Close = Ref(false)
+
+Outdoors.connect(NOTIF_QUIT_EVENT) do
+        Close[] = true
+end
+
 InitOutdoor(SDLStyle)
 app = ODApp()
 
@@ -66,3 +72,11 @@ end
 QuitWindow(win)
 QuitStyle(SDLStyle)
 ```
+
+## License 
+
+This package is under the MIT license, for more information see [License]()
+
+## Contribution
+
+## Bug report 
