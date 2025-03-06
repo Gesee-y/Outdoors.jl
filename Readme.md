@@ -6,6 +6,8 @@ Author: Talom Laël
 
 # Outdoors.jl
 
+[![julia 1.6+]](https://julialang.org)
+
 ## Quick start
 
 ```julia
@@ -78,8 +80,13 @@ This package is under the MIT license, for more information see [License](https:
 ## Contribution
 
 This package is made for that, I would greatly appreciate your contribution to the package.
-Contribution should be *performance improvement*, *new windows style*, or *Bug fix*
+To do so, just :
+   1. Fork the repository
+   2. Create a feature branch (`git checkout -b feat/new-style`)
+   3. Submit a Pull Request
+
+Contribution should be *performance improvement*, *new windows style*, or *bug fix*
 
 ## Bug report 
 
-If you encountered any problem or counter intuitive behavior, you can create an issues at [my GitHub](https://github.com/Gesee-y/Outdoors.jl)
+If you encountered any problem or counter intuitive behavior, you can create an issue at [my GitHub](https://github.com/Gesee-y/Outdoors.jl)
