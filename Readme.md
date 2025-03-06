@@ -17,7 +17,7 @@ using Outdoors
 Windows management has always been the base of any GUI software. The windows's hierarchy, storage, etc, mostly depends on our use case. In our ecosystem, there are multiple API(Application Programming Interface), each with his strength and constraints. For larger projects, an API may be better for UI while another one would be better for visualization and rendering. Switching from one API to another may become cumbersome or if the need to change API comes while the project is already tightly coupled to it, it may become a real challenge.
 
 Outdoors is made for that purpose.
-It's a module to manage the window of the app. It's mean to be an abstraction for different API like [SDL2](https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.libsdl.org/&ved=2ahUKEwiOl_e_nvaLAxXtZkEAHf0NLQ4QFnoFCIIBEAE&usg=AOvVaw0UKX-Hd5cnZaTK_nk7m-ZI) or [GLFW]() while providing an easy way to add new one. It uses the [Notifyer.jl](https://github.com/Gesee-y/Notifyers.jl) package, allowing reactiveness for each API.
+It's a module to manage the window of the app. It's mean to be an abstraction for different API like [SDL2](https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.libsdl.org/&ved=2ahUKEwiOl_e_nvaLAxXtZkEAHf0NLQ4QFnoFCIIBEAE&usg=AOvVaw0UKX-Hd5cnZaTK_nk7m-ZI) or [GLFW](https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.glfw.org/&ved=2ahUKEwjq9-aXn_aLAxVEYEEAHW5AKvUQFnoECAwQAQ&usg=AOvVaw2CQ2ra0JrY6PXNBxnPTZO2) while providing an easy way to add new one. It uses the [Notifyer.jl](https://github.com/Gesee-y/Notifyers.jl) package, allowing reactiveness for each API.
 
 ## Installation 
 
