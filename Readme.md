@@ -35,8 +35,8 @@ julia> Pkg.add(url="https://github.com/Gesee-y/Outdoors.jl.git")
 
 ## Features
 
-   * Abstraction for SDL/...
-   * Provide an easy interface for the implementation of new window style
+   * Abstraction for SDL2/GLFW/...
+   * Provide an easy interface to implement new window style
    * Events management 
    * A generalized window hierarchy ( a window can be the sub window of another one, even if they don't use the same API)
 
