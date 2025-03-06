@@ -8,7 +8,7 @@ Author: Talom Laël
 
 ## Quick start
 
-```
+```julia
 Pkg.add("Outdoors.jl")
 using Outdoors
 ```
@@ -22,10 +22,10 @@ It's a module to manage the window of the app. It's mean to be an abstraction fo
 ## Installation 
 
 ```julia
-Pkg.add("Outdoors.jl")
+julia>Pkg.add("Outdoors.jl")
 ```
 
 or from the GitHub repository 
 ```julia
-Pkg.add(url="github.com/Gesee-y/Outdoors.jl.git")
+julia>Pkg.add(url="github.com/Gesee-y/Outdoors.jl.git")
 ```
