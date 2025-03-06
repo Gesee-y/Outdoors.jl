@@ -27,5 +27,5 @@ julia>Pkg.add("Outdoors.jl")
 
 or from the GitHub repository 
 ```julia
-julia>Pkg.add(url="github.com/Gesee-y/Outdoors.jl.git")
+julia>Pkg.add(url="https://github.com/Gesee-y/Outdoors.jl.git")
 ```
