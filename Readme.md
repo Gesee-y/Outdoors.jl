@@ -36,9 +36,9 @@ julia> Pkg.add(url="https://github.com/Gesee-y/Outdoors.jl.git")
 ## Features
 
    * Abstraction for SDL/...
-   * Provide an easy interface to the implement new windows style
+   * Provide an easy interface for the implementation of new window style
    * Events management 
-   * A generalized window hierarchy ( a window can be the sub window of another one, evyif they don't use the same API)
+   * A generalized window hierarchy ( a window can be the sub window of another one, even if they don't use the same API)
 
 ## Usage
 
@@ -82,7 +82,7 @@ QuitStyle(SDLStyle)
 
 ## License 
 
-This package is under the MIT license, for more information see [License](https://github.com/Gesee-y/Outdoors.jl/blob/main/LICENSE)
+This package is under the Apache 2.0 license, for more information see [License](https://github.com/Gesee-y/Outdoors.jl/blob/main/LICENSE)
 
 ## Contribution
 
