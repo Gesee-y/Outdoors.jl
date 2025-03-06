@@ -9,14 +9,23 @@ Author: Talom Laël
 ## Quick start
 
 ```
-Pkg.add("Outdoors")
+Pkg.add("Outdoors.jl")
 using Outdoors
 ```
 ## Intro
 
-Windows management has always been the base of any GUI software. The windows's hierarchy, storage, etc, mostly depends on our use case. In our ecosystem, there are multiple API(Application Programming Interface) that create and manage windows for us, each with it's specificity:
-  * [SDL]() that can have OpenGL, and SDL render context but with a more rigid interface
-  * [GLFW]() specialized for OpenGL
+Windows management has always been the base of any GUI software. The windows's hierarchy, storage, etc, mostly depends on our use case. In our ecosystem, there are multiple API(Application Programming Interface), each with his strength and constraints. For larger projects, an API may be better for UI while another one would be better for visualization and rendering. Switching from one API to another may become cumbersome or if the need to change API comes while the project is already tightly coupled to it, it may become a real challenge.
 
-Windows are our view on the virtual world as in a house where we can see the outside through the windows. Outdoors is made for that purpose.
-It's a module to manage the window of the app. It's mean to be an abstraction for different API like [SDL2]() and [GLFW]()
+Outdoors is made for that purpose.
+It's a module to manage the window of the app. It's mean to be an abstraction for different API like [SDL2]() or [GLFW]() while providing an easy way to add new one. It uses the [Notifyer.jl]() package, allowing reactiveness for each API.
+
+## Installation 
+
+```julia
+Pkg.add("Outdoors.jl")
+```
+
+or from the GitHub repository 
+```julia
+Pkg.add(url="github.com/Gesee-y/Outdoors.jl.git")
+```
