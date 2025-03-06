@@ -24,7 +24,7 @@ It's a module to manage the window of the app. It's meant to be an abstraction f
 
 ## Installation 
 
-```julia-repl
+```julia
 julia> ] add Outdoors
 ```
 or for development 
