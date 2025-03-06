@@ -14,4 +14,5 @@ using Outdoors
 ```
 ## Intro
 
-Outdoors is a package made to create manage windows in an elegant way without bothering too much about the API used. It abstract API specific instructions and create an unique interface for all of them. the package has currently the SDL mode but implementing GLFW windows shouldn't be much of a problem 
+Windows are our view on the virtual world as in a house where we can see the outside through the windows. Outdoors is made for that purpose.
+It's a module to manage the window of the app. It's mean to be an abstraction for different API like [SDL2]() and [GLFW]()
