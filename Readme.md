@@ -79,4 +79,8 @@ This package is under the MIT license, for more information see [License]()
 
 ## Contribution
 
+This package is made for that, I would greatly appreciate your contribution to the package, you just have to fork your contribution in the repository.
+
 ## Bug report 
+
+If you encountered any problem or counter intuitive behavior, you can tell me at my [discord]()
