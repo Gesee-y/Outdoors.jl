@@ -83,4 +83,4 @@ This package is made for that, I would greatly appreciate your contribution to t
 
 ## Bug report 
 
-If you encountered any problem or counter intuitive behavior, you can tell me at my [discord]()
+If you encountered any problem or counter intuitive behavior, you can tell me at my [discord](https://discord.gg/tZPxfjSQ)
