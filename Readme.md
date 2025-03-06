@@ -93,7 +93,7 @@ To do so, just :
    2. Create a feature branch (`git checkout -b feat/new-style`)
    3. Submit a Pull Request
 
-Contribution can be *performance improvement*, *new windows style*, or *bug fix*
+Contribution can be *performance improvement*, *new window style*, or *bug fix*
 
 ## Bug report 
 
