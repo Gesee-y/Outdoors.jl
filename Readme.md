@@ -23,10 +23,10 @@ It's a module to manage the window of the app. It's meant to be an abstraction f
 ## Installation 
 
 ```julia
-julia>] add!Outdoors
-```
-
+julia>] add Outdoors
+```
 or for development 
+
 ```julia
 julia>Pkg.add(url="https://github.com/Gesee-y/Outdoors.jl.git")
 ```
