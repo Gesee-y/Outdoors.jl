@@ -6,6 +6,7 @@ Author: Talom Laël
 
 # Outdoors.jl
 
+[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![julia 1.6+](https://img.shields.io/badge/Julia-1.6%2B-purple.svg)](https://julialang.org)
 
 ## Quick start
@@ -65,9 +66,9 @@ InitOutdoor(SDLStyle)
 # And create our application context
 app = ODApp()
 
-win = CreateWindow(app,SDLStyle,"Outdoor Test",640,480)
+win = CreateWindow(app, SDLStyle, "Outdoor Test", 640, 480)
 
-#the event loop 
+# Event loop 
 while !Close[]
     GetEvents(win)
 
