@@ -32,3 +32,27 @@ julia>Pkg.add(url="https://github.com/Gesee-y/Outdoors.jl.git")
 
 ## Usage
 
+```julia
+
+using Outdoors
+
+Outdoors.connect(NOTIF_OUTDOOR_INITED) do
+        println("Outdoor successfuly inited!")
+        println()
+end
+
+Outdoors.connect(NOTIF_WINDOW_CREATED) do win
+        sl = GetStyle(win)
+        println("A new window named '$(sl.title)' have been created.")
+end
+Outdoors.connect(NOTIF_WINDOW_EXITTED) do win
+        sl = GetStyle(win)
+        println("The window named '$(sl.title)' have been exitted.")
+end
+Outdoors.connect(NOTIF_ERROR) do msg,err
+        error(msg*err)
+end
+
+InitOutdoor(SDLStyle)
+app = ODApp()
+```
