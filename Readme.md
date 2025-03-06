@@ -4,7 +4,7 @@ Title: ReadMe
 Author: Talom Laël
 ...
 
-##### Outdoors ####
+# Outdoors 
 
 ## Quick start
 
@@ -29,3 +29,6 @@ or from the GitHub repository
 ```julia
 julia>Pkg.add(url="https://github.com/Gesee-y/Outdoors.jl.git")
 ```
+
+## Usage
+
