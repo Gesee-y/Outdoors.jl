@@ -81,6 +81,7 @@ This package is under the MIT license, for more information see [License](https:
 ## Contribution
 
 This package is made for that, I would greatly appreciate your contribution to the package, you just have to fork your contribution in the repository.
+Contribution should be *performance improvement*, *new windows style*, or *Bug fix*
 
 ## Bug report 
 
