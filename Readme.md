@@ -6,7 +6,7 @@ Author: Talom Laël
 
 # Outdoors.jl
 
-[![julia 1.6+]](https://julialang.org)
+[![julia 1.6+](https://img.shields.io/badge/Julia-1.6%2B-purple)](https://julialang.org)
 
 ## Quick start
 
