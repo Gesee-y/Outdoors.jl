@@ -18,12 +18,12 @@ using Outdoors
 For modern GUI application, switching between multiple API(Application Programming Interface) while reducing dependencies is a plus
 
 Outdoors is made for that purpose.
-It's a module to manage the window of the app. It's meant to be an abstraction for different API like [SDL2](https://www.libsdl.org) or [GLFW](https://www.glfw.org) while providing an easy way to add new one. It uses the [Notifyers.jl](https://github.com/Gesee-y/Notifyers.jl) package, allowing reactiveness for each API.
+It's a module to manage the window of the app. It's meant to be an abstraction for different API like [SDL2](https://www.libsdl.org) or [GLFW](https://www.glfw.org) while providing an easy way to add new style (API using the Outdoor interface). It uses the [Notifyers.jl](https://github.com/Gesee-y/Notifyers.jl) package, allowing reactiveness for each API.
 
 ## Installation 
 
 ```julia
-julia>] add("Outdoors")
+julia>] add!Outdoors
 ```
 
 or for development 
@@ -37,39 +37,36 @@ julia>Pkg.add(url="https://github.com/Gesee-y/Outdoors.jl.git")
 
 using Outdoors
 
-Outdoors.connect(NOTIF_OUTDOOR_INITED) do
-        println("Outdoor successfuly inited!")
-        println()
-end
-
-Outdoors.connect(NOTIF_WINDOW_CREATED) do win
-        sl = GetStyle(win)
-        println("A new window named '$(sl.title)' have been created.")
-end
-Outdoors.connect(NOTIF_WINDOW_EXITTED) do win
-        sl = GetStyle(win)
-        println("The window named '$(sl.title)' have been exitted.")
-end
+# will call the function if Outdoors encountered an error
 Outdoors.connect(NOTIF_ERROR) do msg,err
         error(msg*err)
 end
 
+# to know went to exit the event loop
 const Close = Ref(false)
 
+# will call this function when all windows will be closed
 Outdoors.connect(NOTIF_QUIT_EVENT) do
         Close[] = true
 end
 
+# we initialize our Outdoors style 
 InitOutdoor(SDLStyle)
+
+# And create our application context
 app = ODApp()
 
 win = CreateWindow(app,SDLStyle,"Outdoor Test",640,480)
 
+#the event loop 
 while !Close[]
-        GetEvents(win)
-        yield()
+    GetEvents(win)
+
+    # allow asynchronous call
+    yield()
 end
 
+# we free the resources
 QuitWindow(win)
 QuitStyle(SDLStyle)
 ```
@@ -80,9 +77,9 @@ This package is under the MIT license, for more information see [License](https:
 
 ## Contribution
 
-This package is made for that, I would greatly appreciate your contribution to the package, you just have to fork your contribution in the repository.
+This package is made for that, I would greatly appreciate your contribution to the package.
 Contribution should be *performance improvement*, *new windows style*, or *Bug fix*
 
 ## Bug report 
 
-If you encountered any problem or counter intuitive behavior, you can pull a request at [my GitHub](https://github.com/Gesee-y/Outdoors.jl) or tell me at [my discord](https://discord.gg/tZPxfjSQ)
+If you encountered any problem or counter intuitive behavior, you can create an issues at [my GitHub](https://github.com/Gesee-y/Outdoors.jl)
