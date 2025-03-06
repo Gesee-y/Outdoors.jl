@@ -9,6 +9,7 @@ Author: Talom Laël
 ## Quick start
 
 ```julia
+using Pkg
 Pkg.add("Outdoors")
 using Outdoors
 ```
