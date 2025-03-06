@@ -6,7 +6,7 @@ Author: Talom Laël
 
 # Outdoors.jl
 
-[![julia 1.6+](https://img.shields.io/badge/Julia-1.6%2B-purple)](https://julialang.org)
+[![julia 1.6+](https://img.shields.io/badge/Julia-1.6%2B-purple.svg)](https://julialang.org)
 
 ## Quick start
 
@@ -25,13 +25,20 @@ It's a module to manage the window of the app. It's meant to be an abstraction f
 ## Installation 
 
 ```julia
-julia>] add Outdoors
+julia> ] add Outdoors
 ```
 or for development 
 
 ```julia
-julia>Pkg.add(url="https://github.com/Gesee-y/Outdoors.jl.git")
+julia> Pkg.add(url="https://github.com/Gesee-y/Outdoors.jl.git")
 ```
+
+## Features
+
+   * Abstraction for SDL/...
+   * Provide an easy interface to the implement new windows style
+   * Events management 
+   * A generalized window hierarchy ( a window can be the sub window of another one, evyif they don't use the same API)
 
 ## Usage
 
@@ -85,7 +92,7 @@ To do so, just :
    2. Create a feature branch (`git checkout -b feat/new-style`)
    3. Submit a Pull Request
 
-Contribution should be *performance improvement*, *new windows style*, or *bug fix*
+Contribution can be *performance improvement*, *new windows style*, or *bug fix*
 
 ## Bug report 
 
