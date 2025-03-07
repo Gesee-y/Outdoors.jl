@@ -18,10 +18,10 @@ using Outdoors
 ```
 ## Intro
 
-In modern GUI application, The facility to switch between multiple  windowing APIs(Application Programming Interface) while reducing dependencies to a specific one is a plus.
+In modern GUI application, The ability to switch between multiple  windowing APIs(Application Programming Interfaces) while reducing dependencies to a specific one is a plus.
 
-Outdoors is made for that purpose.
-It's a module that manage window of an app. It's meant to be an abstraction for different API like [SDL2](https://www.libsdl.org) or [GLFW](https://www.glfw.org) while providing an easy way to add new style (API using the Outdoor interface) and then decouple the program from the API. It uses the [Notifyers.jl](https://github.com/Gesee-y/Notifyers.jl) package, allowing reactiveness for each API.
+Outdoors is designed for that purpose.
+It manage the window of an application. It's meant to be an abstraction layer for different API like [SDL2](https://www.libsdl.org) or [GLFW](https://www.glfw.org) while providing an easy way to add new style (API using the Outdoor interface) and then decouple the program from the API. It uses the [Notifyers.jl](https://github.com/Gesee-y/Notifyers.jl) package, allowing reactiveness for each API.
 
 ## Installation 
 
@@ -38,7 +38,7 @@ julia> Pkg.add(url="https://github.com/Gesee-y/Outdoors.jl.git")
 
    * Abstraction for SDL2/GLFW/...
    * Provide an easy-to-use interface to implement new window style
-   * Events driven management
+   * Event-driven management
    * A generalized window hierarchy ( a window can be the sub window of another one, even if they don't use the same API)
 
 ## Usage
