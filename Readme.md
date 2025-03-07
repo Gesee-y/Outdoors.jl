@@ -23,6 +23,10 @@ In modern GUI application, The ability to switch between multiple  windowing API
 Outdoors is designed for that purpose.
 It manage the window of an application. It's meant to be an abstraction layer for different API like [SDL2](https://www.libsdl.org) or [GLFW](https://www.glfw.org) while providing an easy way to add new style (API using the Outdoor interface) and then decouple the program from the API. It uses the [Notifyers.jl](https://github.com/Gesee-y/Notifyers.jl) package, allowing reactiveness for each API.
 
+### Why Outdoors ?
+
+I'm actually working on a full 2D/3D game engine in Julia, Outdoors is actually the manager of the application, decoupling the engine from any windowing API
+
 ## Installation 
 
 ```julia
@@ -40,6 +44,7 @@ julia> Pkg.add(url="https://github.com/Gesee-y/Outdoors.jl.git")
    * Provide an easy-to-use interface to implement new window style
    * Event-driven management
    * A generalized window hierarchy ( a window can be the sub window of another one, even if they don't use the same API)
+   * easy and intuitive inputs handling 
 
 ## Usage
 
@@ -98,3 +103,7 @@ Contribution can be *performance improvement*, *new window style*, or *bug fix*
 ## Bug report 
 
 If you encountered any problem or counter intuitive behavior, you can create an issue at [my GitHub](https://github.com/Gesee-y/Outdoors.jl)
+
+## More
+
+I am from Cameroon at Yaoundé, you can contact me if needed at gesee37@gmail.com
