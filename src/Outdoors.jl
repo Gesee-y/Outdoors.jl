@@ -204,6 +204,7 @@ Use it as supertype when you want to add a new type of window.
 """
 abstract type AbstractStyle end
 
+include("Errors.jl")
 include("Event_structs.jl")
 
 mutable struct ODWindow{T <: AbstractStyle}
