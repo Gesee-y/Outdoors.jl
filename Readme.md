@@ -44,7 +44,7 @@ julia> Pkg.add(url="https://github.com/Gesee-y/Outdoors.jl.git")
    * Provide an easy-to-use interface to implement new window style
    * Event-driven management
    * A generalized window hierarchy ( a window can be the sub window of another one, even if they don't use the same API)
-   * easy and intuitive inputs handling 
+   * inputs management
 
 ## Usage
 
