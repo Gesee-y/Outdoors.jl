@@ -96,8 +96,4 @@ Contribution can be *performance improvement*, *new window style*, or *bug fix*
 
 ## Bug report 
 
-If you encountered any problem or counter intuitive behavior, you can create an issue at [my GitHub](https://github.com/Gesee-y/Outdoors.jl)
-
-## More
-
-I am from Cameroon at Yaoundé, you can contact me if needed at gesee37@gmail.com
+If you encountered any problem or counter intuitive behavior, you can create an issue at [my GitHub](https://github.com/Gesee-y/Outdoors.jl)
