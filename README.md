@@ -1,100 +1,100 @@
-# Outdoors.jl
+# Outdoors.jl  
 
-[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-[![julia 1.6+](https://img.shields.io/badge/Julia-1.6%2B-purple.svg)](https://julialang.org)
+[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)  
+[![Julia 1.6+](https://img.shields.io/badge/Julia-1.6%2B-purple.svg)](https://julialang.org)  
 
-## Quick start
+## Quick Start  
 
-```julia
-using Pkg
-Pkg.add("Outdoors")
-using Outdoors
-```
-## Intro
+```julia  
+using Pkg  
+Pkg.add("Outdoors")  
+using Outdoors  
+```  
 
-In modern GUI application, The ability to switch between multiple  windowing APIs(Application Programming Interfaces) while reducing dependencies to a specific one is a plus.
+## Introduction  
 
-Outdoors is designed for that purpose.
-It manage the window of an application. It's meant to be an abstraction layer for different API like [SDL2](https://www.libsdl.org) or [GLFW](https://www.glfw.org) while providing an easy way to add new style (API using the Outdoor interface) and then decouple the program from the API. It uses the [Notifyers.jl](https://github.com/Gesee-y/Notifyers.jl) package, allowing reactiveness for each API.
+In modern GUI applications, the ability to switch between multiple windowing APIs (e.g., [SDL2](https://www.libsdl.org), [GLFW](https://www.glfw.org)) while minimizing dependencies on specific libraries is critical.  
 
-### Why Outdoors ?
+**Outdoors.jl** solves this by acting as an abstraction layer for window management. It decouples your application from underlying APIs and leverages [Notifyers.jl](https://github.com/Gesee-y/Notifyers.jl) for event-driven reactivity.  
 
-I'm actually working on a full 2D/3D game engine in Julia, Outdoors is actually the manager of the application, decoupling the engine from any windowing API
+### Why Outdoors?  
 
-## Installation 
+This package is part of a larger 2D/3D game engine project in Julia. Outdoors.jl serves as the **window and application manager**, ensuring engine independence from specific windowing APIs.  
 
-```julia
-julia> ] add Outdoors
-```
+## Installation  
 
-or for development 
+**Stable release**:  
+```julia  
+julia> ]add Outdoors  
+```  
 
-```julia
-julia> Pkg.add(url="https://github.com/Gesee-y/Outdoors.jl.git")
-```
+**Development version**:  
+```julia  
+julia> ]add https://github.com/Gesee-y/Outdoors.jl.git  
+```  
 
-## Features
+## Features  
 
-   * Abstraction for SDL2/GLFW/...
-   * Provide an easy-to-use interface to implement new window style
-   * Event-driven management: Events can be getter via Notifyer, every change (even API-specific errors) are send in Notifyer and then you can handle it like you want
-   * A generalized window hierarchy a window can be the sub window of another one, even if they don't use the same API
-   * Unified Inputs management: meaning you that even if you are using a GLFW window or an SDL one, inputs are managed the same way
+- **API abstraction**: Unified interface for SDL2, GLFW, and more.  
+- **Extensible**: Easily add new windowing APIs via a simple interface.  
+- **Event-driven**: Subscribe to events (including API-specific errors) using `Notifyer` objects.  
+- **Hierarchical windows**: Create subwindows across different APIs.  
+- **Unified input handling**: Consistent input management for GLFW, SDL, and others.  
 
-## Usage
+## Usage  
 
-```julia
+```julia  
+using Outdoors  
 
-using Outdoors
+# Handle errors  
+Outdoors.connect(NOTIF_ERROR) do msg, err  
+    error(msg * ": " * err)  
+end  
 
-# will call the function if Outdoors encountered an error
-Outdoors.connect(NOTIF_ERROR) do msg,err
-        error(msg*err)
-end
+# Track application exit  
+const should_close = Ref(false)  
+Outdoors.connect(NOTIF_QUIT_EVENT) do  
+    should_close[] = true  
+end  
 
-# to know when to exit the event loop
-const Close = Ref(false)
+# Initialize SDL-style windowing  
+InitOutdoor(SDLStyle)  
 
-# will call this function when all windows will be closed
-Outdoors.connect(NOTIF_QUIT_EVENT) do
-        Close[] = true
-end
+# Create application context and window  
+app = ODApp()  
+win = CreateWindow(app, SDLStyle, "Outdoor Test", 640, 480)  
 
-# we initialize our Outdoors style 
-InitOutdoor(SDLStyle)
+# Event loop  
+while !should_close[]  
+    GetEvents(win)  
+    yield()  # Allow asynchronous processing  
+end  
 
-# And create our application context
-app = ODApp()
+# Cleanup  
+QuitWindow(win)  
+QuitStyle(SDLStyle)  
+```  
 
-win = CreateWindow(app, SDLStyle, "Outdoor Test", 640, 480)
+## License  
 
-# Event loop 
-while !Close[]
-    GetEvents(win)
+Apache 2.0. See [LICENSE](https://github.com/Gesee-y/Outdoors.jl/blob/main/LICENSE).  
 
-    # allow asynchronous call
-    yield()
-end
+## Contributing  
 
-# Clean up resources
-QuitWindow(win)
-QuitStyle(SDLStyle)
-```
+Contributions are welcome!  
 
-## License 
+1. [Fork the repository](https://github.com/Gesee-y/Outdoors.jl/fork).  
+2. Create a feature branch:  
+   ```bash  
+   git checkout -b feat/new-style  
+   ```  
+3. Submit a pull request.  
 
-This package is under the Apache 2.0 license, for more information see [License](https://github.com/Gesee-y/Outdoors.jl/blob/main/LICENSE)
+**Examples of contributions**:  
+- New windowing API integrations (e.g., X11, Wayland).  
+- Performance improvements.  
+- Bug fixes.  
 
-## Contribution
+## Bug Reports  
 
-This package is made for that, I would greatly appreciate your contribution to the package.
-To do so, just :
-   1. Fork the repository
-   2. Create a feature branch (`git checkout -b feat/new-style`)
-   3. Submit a Pull Request
-
-Contribution can be *performance improvement*, *new window style*, or *bug fix*
-
-## Bug report 
-
-If you encountered any problem or counter intuitive behavior, you can create an issue at [my GitHub](https://github.com/Gesee-y/Outdoors.jl)
+Report issues on the [GitHub repository](https://github.com/Gesee-y/Outdoors.jl/issues).  
