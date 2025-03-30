@@ -25,7 +25,8 @@ I'm actually working on a full 2D/3D game engine in Julia, Outdoors is actually 
 
 ```julia
 julia> ] add Outdoors
-```
+```
+
 or for development 
 
 ```julia
@@ -96,4 +97,4 @@ Contribution can be *performance improvement*, *new window style*, or *bug fix*
 
 ## Bug report 
 
-If you encountered any problem or counter intuitive behavior, you can create an issue at [my GitHub](https://github.com/Gesee-y/Outdoors.jl)
+If you encountered any problem or counter intuitive behavior, you can create an issue at [my GitHub](https://github.com/Gesee-y/Outdoors.jl)
