@@ -37,9 +37,9 @@ julia> Pkg.add(url="https://github.com/Gesee-y/Outdoors.jl.git")
 
    * Abstraction for SDL2/GLFW/...
    * Provide an easy-to-use interface to implement new window style
-   * Event-driven management
-   * A generalized window hierarchy ( a window can be the sub window of another one, even if they don't use the same API)
-   * inputs management
+   * Event-driven management: Events can be getter via Notifyer, every change (even API-specific errors) are send in Notifyer and then you can handle it like you want
+   * A generalized window hierarchy a window can be the sub window of another one, even if they don't use the same API
+   * Unified Inputs management: meaning you that even if you are using a GLFW window or an SDL one, inputs are managed the same way
 
 ## Usage
 
