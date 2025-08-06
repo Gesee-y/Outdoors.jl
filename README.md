@@ -1,7 +1,6 @@
 # Outdoors.jl  
-
-[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)  
-[![Julia 1.6+](https://img.shields.io/badge/Julia-1.6%2B-purple.svg)](https://julialang.org)  
+ 
+[![Julia 1.9+](https://img.shields.io/badge/Julia-1.9%2B-purple.svg)](https://julialang.org)  
 
 ## Quick Start  
 
@@ -77,7 +76,7 @@ QuitStyle(SDLStyle)
 
 ## License  
 
-Apache 2.0. See [LICENSE](https://github.com/Gesee-y/Outdoors.jl/blob/main/LICENSE).  
+MIT. See [LICENSE](https://github.com/Gesee-y/Outdoors.jl/blob/main/LICENSE).  
 
 ## Contributing  
 
