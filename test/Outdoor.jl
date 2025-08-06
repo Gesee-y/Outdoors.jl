@@ -1,6 +1,6 @@
 ## We check the Outdoors module function correctly ##
 
-include("E:\\Cours et epreuve\\1ere\\Cruise\\src\\App\\Outdoors.jl")
+include("..\\src\\Outdoors.jl")
 
 using .Outdoors
 
@@ -155,7 +155,9 @@ function MultiInputsTest()
 		EventLoop(app)
 		#println(dt)
 		axis = GetAxis(win,"Wheel")
-		motion = GetAxis(win2,"MMotion")
+		println("Axis")
+		@time motion = GetAxis(win2,"MMotion")
+		
 		if motion.xrel != 0 || motion.yrel != 0
 			println(motion)
 		end
@@ -163,8 +165,10 @@ function MultiInputsTest()
 			println(axis)
 		end
 
-		IsKeyJustPressed(win3,Shoot) && println("Shooting")
-		IsKeyPressed(win,"RIGHT") && println("Moving to the right.")
+		println("just pressed")
+		@time IsKeyJustPressed(win3,Shoot) && println("Shooting")
+		println("pressed")
+		@time IsKeyPressed(win,"RIGHT") && println("Moving to the right.")
 		#println(GetMousePosition(SDLApp))
 		yield()
 		sleep(1/90)

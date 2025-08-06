@@ -1,7 +1,6 @@
 ## SDL2 Windows##
 
-using Reexport
-@reexport using SimpleDirectMediaLayer.LibSDL2
+using SimpleDirectMediaLayer.LibSDL2
 
 export SDLWindow, Delay, SDLStyle
 
