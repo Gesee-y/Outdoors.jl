@@ -2,7 +2,7 @@
 
 module Outdoors
 
-using Notifyers
+using EventNotifiers
 using NodeTree
 
 export NOTIF_WINDOW_CREATED, NOTIF_WINDOW_UPDATED, NOTIF_WINDOW_EXITTED, NOTIF_WINDOW_TITLE_CHANGED

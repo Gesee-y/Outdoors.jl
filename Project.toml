@@ -1,9 +1,10 @@
 name = "Outdoors"
 uuid = "d3598698-a7e3-42d2-87cb-a7a1f294c746"
-version = "0.5.0"
 authors = ["Talom Lael <gesee37@gmail.com>"]
+version = "0.5.0"
 
 [deps]
+EventNotifiers = "de92ec2b-fb1f-40f8-8e84-3094df8dc533"
 GLFW = "f7f18e0c-5ee9-5ccd-a5bf-e8befd85ed98"
 SimpleDirectMediaLayer = "98e33af6-2ee5-5afd-9e75-cbc738b767c4"
 
