@@ -2,7 +2,7 @@
 
 julia_version = "1.10.5"
 manifest_format = "2.0"
-project_hash = "5e8d1086aabd3a4f11ca24607694c6fd10917757"
+project_hash = "99302413c50a81ee08cf43270a8eb84766667cd1"
 
 [[deps.ArgTools]]
 uuid = "0dad84c5-d112-42e6-8d28-ef12dabb789f"
@@ -357,6 +357,11 @@ version = "6.5.1+0"
 [[deps.NetworkOptions]]
 uuid = "ca575930-c2e3-43a9-ace4-1e988b2c1908"
 version = "1.2.0"
+
+[[deps.NodeTree]]
+git-tree-sha1 = "4c2fb07056ec6b0f2504ff33627f52680c63cf78"
+uuid = "2904b71e-4df0-4a82-a724-4bbee9184de7"
+version = "1.0.0"
 
 [[deps.Ogg_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl"]
