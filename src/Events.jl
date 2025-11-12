@@ -79,10 +79,11 @@ other case.
 """
 IsKeyJustPressed(win::ODWindow,key::String) = begin
 	Inputs = get_keyboard_data(get_inputs_data(win))
-	!(key in Inputs) && return false
+	!(haskey(Inputs,key)) && return false
 
 	return Inputs[key].just_pressed[]
 end
+IsKeyJustPressed(app::ODApp,key) = any(Base.Fix2(IsKeyJustPressed, key), values(app.Windows))
 
 """
 	IsKeyPressed(win::ODWindow,key::String)
@@ -92,10 +93,11 @@ other case
 """
 IsKeyPressed(win::ODWindow,key::String) = begin
 	Inputs = get_keyboard_data(get_inputs_data(win))
-	!(key in Inputs) && return false
+	!(haskey(Inputs,key)) && return false
 
 	return Inputs[key].pressed
 end
+IsKeyPressed(app::ODApp,key) = any(Base.Fix2(IsKeyPressed, key), values(app.Windows))
 
 """
 	IsKeyJustReleased(win::ODWindow,key::String)
@@ -105,10 +107,12 @@ other case
 """
 IsKeyJustReleased(win::ODWindow,key::String) = begin
 	Inputs = get_keyboard_data(get_inputs_data(win))
-	!(key in Inputs) && return false
+	!(haskey(Inputs,key)) && return false
 
 	return Inputs[key].just_released[]
 end
+IsKeyJustReleased(app::ODApp,key) = any(Base.Fix2(IsKeyJustReleased, key), values(app.Windows))
+
 
 """
 	IsKeyReleased(win::ODWindow,key::String)
@@ -117,6 +121,7 @@ This function return true if a keyboard key `key` is actually released, return f
 other case
 """
 IsKeyReleased(win::ODWindow,key::String) = !IsKeyPressed(win,key)
+IsKeyReleased(app::ODApp,key) = any(Base.Fix2(IsKeyJustPressed, key), values(app.Windows))
 
 """
 	IsMouseButtonJustPressed(win::ODWindow,key::String)
@@ -126,7 +131,7 @@ other case.
 """
 IsMouseButtonJustPressed(win::ODWindow,key::String) = begin
 	MouseButtons = get_mousebutton_data(get_inputs_data(win))
-	!(key in MouseButtons) && return false
+	!(haskey(MouseButtons, key)) && return false
 
 	return MouseButtons[key].just_pressed[]
 end
@@ -139,7 +144,7 @@ other case.
 """
 IsMouseButtonPressed(win::ODWindow,key::String) = begin
 	MouseButtons = get_mousebutton_data(get_inputs_data(win))
-	!(key in MouseButtons) && return false
+	!(haskey(MouseButtons, key)) && return false
 
 	return MouseButtons[key].pressed
 end
@@ -152,7 +157,7 @@ other case.
 """
 IsMouseButtonJustReleased(win::ODWindow,key::String) = begin
 	MouseButtons = get_mousebutton_data(get_inputs_data(win))
-	!(key in MouseButtons) && return false
+	!(haskey(MouseButtons, key)) && return false
 
 	return MouseButtons[key].just_released[]
 end
@@ -210,7 +215,7 @@ QuitOutdoor(SDLApp)
 ```
 """
 function EventLoop(app::ODApp)
-	wins = getfield(app.Windows,:vl)
+	wins = values(app.Windows)
 
 	for win in wins
 		state = get_inputs_state(win)
@@ -280,7 +285,7 @@ end
 _UpdateMouseMotion(data::InputData) = begin
 	Axes = get_axes_data(data)
 
-	if "MMotion" in Axes
+	if haskey(Axes,"MMotion")
 		motion = Axes["MMotion"]
 		Axes["MMotion"] = MouseMotionEvent(motion.x,motion.y,0,0)
 	end

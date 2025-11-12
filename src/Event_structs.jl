@@ -172,15 +172,15 @@ struct MouseWheelEvent <: AxisEvent
 end
 
 struct InputData
-	Keyboard::Dictionary{String,KeyboardEvent}
-	MouseButtons :: Dictionary{String,MouseClickEvent}
-	Axes :: Dictionary{String,AxisEvent}
+	Keyboard::Dict{String,KeyboardEvent}
+	MouseButtons :: Dict{String,MouseClickEvent}
+	Axes :: Dict{String,AxisEvent}
 
 	## Constructors
 
-	InputData(k=Dictionary{String,KeyboardEvent}(), 
-			m=Dictionary{String,MouseClickEvent}(),
-			a=Dictionary{String,AxisEvent}()) = new(k,m,a)
+	InputData(k=Dict{String,KeyboardEvent}(), 
+			m=Dict{String,MouseClickEvent}(),
+			a=Dict{String,AxisEvent}()) = new(k,m,a)
 end
 
 struct InputState
