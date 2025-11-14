@@ -2,7 +2,7 @@
 
 julia_version = "1.10.5"
 manifest_format = "2.0"
-project_hash = "99302413c50a81ee08cf43270a8eb84766667cd1"
+project_hash = "45e04a094bdbb7aec44173891fc5f9035a6677ca"
 
 [[deps.ArgTools]]
 uuid = "0dad84c5-d112-42e6-8d28-ef12dabb789f"
@@ -88,9 +88,9 @@ version = "1.0.0"
 
 [[deps.Expat_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl"]
-git-tree-sha1 = "7bb1361afdb33c7f2b085aa49ea8fe1b0fb14e58"
+git-tree-sha1 = "27af30de8b5445644e8ffe3bcb0d72049c089cf1"
 uuid = "2e619515-83b5-522b-bb60-26c02a35a201"
-version = "2.7.1+0"
+version = "2.7.3+0"
 
 [[deps.FFMPEG_jll]]
 deps = ["Artifacts", "Bzip2_jll", "FreeType2_jll", "FriBidi_jll", "JLLWrappers", "LAME_jll", "Libdl", "Ogg_jll", "OpenSSL_jll", "Opus_jll", "PCRE2_jll", "Zlib_jll", "libaom_jll", "libass_jll", "libfdk_aac_jll", "libvorbis_jll", "x264_jll", "x265_jll"]
@@ -399,9 +399,9 @@ version = "8.45.0+0"
 
 [[deps.Pango_jll]]
 deps = ["Artifacts", "Cairo_jll", "Fontconfig_jll", "FreeType2_jll", "FriBidi_jll", "Glib_jll", "HarfBuzz_jll", "JLLWrappers", "Libdl"]
-git-tree-sha1 = "1f7f9bbd5f7a2e5a9f7d96e51c9754454ea7f60b"
+git-tree-sha1 = "0662b083e11420952f2e62e17eddae7fc07d5997"
 uuid = "36c8627f-9965-5494-a995-c6b170f724f3"
-version = "1.56.4+0"
+version = "1.57.0+0"
 
 [[deps.Pixman_jll]]
 deps = ["Artifacts", "CompilerSupportLibraries_jll", "JLLWrappers", "LLVMOpenMP_jll", "Libdl"]
@@ -469,10 +469,10 @@ uuid = "ab825dc5-c88e-5901-9575-1e5e20358fcf"
 version = "2.32.10+0"
 
 [[deps.SDL2_mixer_jll]]
-deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg", "SDL2_jll"]
-git-tree-sha1 = "e6fef90014a8b690dac99e066146a726c0a2c080"
+deps = ["Artifacts", "JLLWrappers", "Libdl", "SDL2_jll"]
+git-tree-sha1 = "7c109404c6d12d8da4706a2f0dd651bf088aa730"
 uuid = "7e88e5ca-120e-58e7-9660-b2187fd466c0"
-version = "2.6.2+0"
+version = "2.8.1+0"
 
 [[deps.SDL2_ttf_jll]]
 deps = ["Artifacts", "Bzip2_jll", "FreeType2_jll", "Glib_jll", "Graphite2_jll", "JLLWrappers", "Libdl", "PCRE_jll", "Pkg", "SDL2_jll", "libpng_jll"]
