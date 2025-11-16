@@ -513,7 +513,4 @@ function DestroyChildWindow(win::ODWindow)
 	end
 end
 
-include(joinpath("SDL","SDL.jl"))
-#include(joinpath("GLFW","GLFW.jl"))
-
 end #module
