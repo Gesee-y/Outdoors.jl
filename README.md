@@ -47,7 +47,8 @@ julia> ]add https://github.com/Gesee-y/Outdoors.jl.git
 ## Usage  
 
 ```julia  
-using Outdoors  
+using Outdoors
+using SDLOutdoors
 
 # Handle errors  
 Outdoors.connect(NOTIF_ERROR) do msg, err  
