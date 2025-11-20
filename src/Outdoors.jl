@@ -237,14 +237,6 @@ When creating your own window style, you should create a dispatch of it with the
 InitOutdoor(::Type{AbstractStyle}) = NOTIF_OUTDOOR_INITED.emit
 
 """
-	CreateContext(app::ODWindow,mode::ContextType)
-
-Create the context `mode` into the window `win`.
-When creating your own window style, you should create a dispatch of it with the type of your window.
-"""
-CreateContext(app::ODWindow,mode::ContextType) = (NOTIF_CONTEXT_CREATED.emit = win)
-
-"""
 	CreateWindow(::Type{AbstractStyle},args...)
 
 Function to create a window depending on the type passed in parameters.
