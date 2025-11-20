@@ -131,16 +131,16 @@ const RightDoubleClick = RightClick{2}
 
 A struct representing the state of a mouse button.
 """
-struct MouseClickEvent <: Event
-	type :: ClickEvent
+struct MouseClickEvent{T} <: Event
+	type :: T
 
 	just_pressed :: Bool
 	pressed :: Bool
 	just_released :: Bool
 	released :: Bool
 
-	MouseClickEvent(type,just_pressed,pressed,just_released,released) = new(type,just_pressed,pressed,just_released,released)
-	MouseClickEvent(ev::MouseClickEvent,just_pressed=false,just_released=false) = new(ev.type,just_pressed,ev.pressed,just_released,ev.released)
+	MouseClickEvent(type::T,just_pressed,pressed,just_released,released) where T <: ClickEvent = new{T}(type,just_pressed,pressed,just_released,released)
+	MouseClickEvent(ev::MouseClickEvent{T},just_pressed=false,just_released=false) where T = new{T}(ev.type,just_pressed,ev.pressed,just_released,ev.released)
 end
 
 """
@@ -202,6 +202,31 @@ struct InputState
 		new(InputData() ,kb, mb, mm, mw)
 	end
 end
+
+mutable struct Rect2D
+    x::Int
+    y::Int
+    w::Int
+    h::Int
+end
+
+"""
+    struct InputZone
+        rect::Rect2D
+
+This struct represent an independent zone for inputs
+"""
+mutable struct InputZone
+	const id::UInt
+    rect::Rect2D
+    priority::Int
+    focus::Bool
+
+    ## Constructors
+
+    InputZone(s, e, p::Int) = new(time_ns(), Rect2D(s...,e...), p, false)
+end
+
 
 Base.reset(inp::InputState) = begin
 	_reset_count(inp.KBState)

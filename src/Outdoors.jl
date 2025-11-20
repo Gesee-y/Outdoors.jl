@@ -212,11 +212,11 @@ mutable struct ODWindow{T <: AbstractStyle}
 	id::UInt
 	app::WeakRef
 	inputs::InputState
-	zones::Dict{Int, Any}
+	zones::Dict{Int, InputZone}
 
 	## Constructors
 
-	ODWindow{T}(data::T) where T <: AbstractStyle = new(data,true, 0, WeakRef(nothing), InputState(), Dict{Int, Any}())
+	ODWindow{T}(data::T) where T <: AbstractStyle = new(data,true, 0, WeakRef(nothing), InputState(), Dict{Int, InputZone}())
 end
 
 struct ODApp

@@ -1,12 +1,12 @@
 ########################################### Input zone for Outdoors #####################################################
 
+export InputZone, EnableFocus, DisableFocus, SetZoneFocusTo, AttachZoneToWindow, RemoveAllZoneFocus
+
 #=
     This section is mostly about creating a section with it's own private input handling.
     Coordinates are local to the zone.
     First of all we need a simple wway to create a rect.
 =#
-
-include("..\\..\\MathLib.jl\\src\\MathLib.jl")
 
 #=
     Okay, we need to be able to create a zone, manage overlap and priority
@@ -15,23 +15,6 @@ include("..\\..\\MathLib.jl\\src\\MathLib.jl")
     Next, how do we acces a zone ? 
     Next, how do we handle events ? We just need to get regular event
 =#
-
-"""
-    struct InputZone
-        rect::Rect2D
-
-This struct represent an independent zone for inputs
-"""
-mutable struct InputZone
-	const id::UInt
-    rect::Rect2D
-    priority::Int
-    focus::Bool
-
-    ## Constructors
-
-    InputZone(s, e, p::Int) = new(time_ns(), Rect2D(s,e), p, false)
-end
 
 """
     AttachZoneToWindow(win::ODWindow, zone::InputZone)
@@ -85,7 +68,7 @@ GetMousePosition(win::ODWindow, zone::InputZone) = begin
     x = pos[1] - rect.x
     y = pos[2] - rect.y
 
-    if point_in_rect(rect,pos) && zone.focus
+    if _point_in_rect(rect,pos) && zone.focus
         return (x,y)
     end
 
@@ -155,3 +138,6 @@ This function return true if a mouse button is actually released, it return fals
 other case.
 """
 IsMouseButtonReleased(win::ODWindow,zone::InputZone,key::String) = zone.focus ? !IsMouseButtonPressed(win,key) : false
+
+_point_in_rect(r::Rect2D, pos) = _point_in_rect(r, pos...)
+_point_in_rect(r::Rect2D, x, y) = (r.x <= x <= r.x+r.w && r.y <= y <= r.y+r.h)

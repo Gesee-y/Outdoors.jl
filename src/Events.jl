@@ -2,8 +2,8 @@
 
 export NOTIF_JOYPAD_INPUT, NOTIF_EVENT_RECEIVED, NOTIF_KEYBOARD_INPUT, NOTIF_MOUSE_MOTION
 export NOTIF_QUIT_EVENT, NOTIF_WINDOW_EVENT, NOTIF_MOUSE_BUTTON
-export Inputs, Event, ClickEvent, KeyboardEvent, WindowEvents, RightClick, RightDoubleClick
-export LeftClick, LeftDoubleClick, MiddleClick
+export Inputs, Event, ClickEvent, KeyboardEvent, WindowEvents, RightClick, RightDoubleClick, AxisEvent
+export LeftClick, LeftDoubleClick, MiddleClick, MouseClickEvent, MouseMotionEvent, MouseWheelEvent
 export EventLoop, GetEvents, GetMousePosition, GetAxis
 export IsKeyPressed, IsKeyReleased, IsMouseButtonPressed, IsMouseButtonReleased
 export IsKeyJustPressed, IsKeyJustReleased, IsMouseButtonJustPressed, IsMouseButtonJustReleased
@@ -231,6 +231,7 @@ function EventLoop(app::ODApp)
 end
 
 include("InputMaps.jl")
+include("InputRect.jl")
 
 """
 	GetAxis(win::ODWindow,name::String)
