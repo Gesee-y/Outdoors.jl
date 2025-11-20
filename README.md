@@ -1,5 +1,9 @@
 # Outdoors.jl  
+
  
+[![Test workflow status](https://github.com/Gesee-y/Outdoors.jl/actions/workflows/Tests.yml/badge.svg?branch=main)](https://github.com/Gesee-y/Outdoors.jl/actions/workflows/Tests.yml?query=branch%3Amain)
+[![Coverage Status](https://coveralls.io/repos/github/Gesee-y/Outdoors.jl/badge.svg?branch=main)](https://coveralls.io/github/Gesee-y/Outdoors.jl?branch=main)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/Gesee-y/Outdoors.jl/blob/main/LICENSE)
 [![Julia 1.9+](https://img.shields.io/badge/Julia-1.9%2B-purple.svg)](https://julialang.org)  
 
 ## Quick Start  
@@ -43,7 +47,8 @@ julia> ]add https://github.com/Gesee-y/Outdoors.jl.git
 ## Usage  
 
 ```julia  
-using Outdoors  
+using Outdoors
+using SDLOutdoors
 
 # Handle errors  
 Outdoors.connect(NOTIF_ERROR) do msg, err  
