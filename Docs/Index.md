@@ -32,7 +32,7 @@ Windows style are available as standalone packages to keep Outdoors lightweight,
 
 ## Usage
 
-```
+```julia
 using Outdoors
 using SDLOutdoors
 
