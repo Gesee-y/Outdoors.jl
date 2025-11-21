@@ -15,7 +15,7 @@ export ContextType
 
 export AbstractStyle, ODWindow, ODApp
 
-export CreateWindow, ResizeWindow, RepositionWindow, QuitWindow, SetWindowTitle, SetFullscreen
+export CreateWindow, ResizeWindow, RepositionWindow, QuitWindow, SetWindowTitle, SetFullscreen, DestroyChildWindow
 export GetError, UpdateWindow, WindowDelay, InitOutdoor, WindowCount, ShowWindow, HideWindow
 export QuitStyle, QuitOutdoor, GetStyle, GetWindowID, GetWindowFromStyleID, GetStyleWindowID
 
@@ -509,5 +509,10 @@ function DestroyChildWindow(win::ODWindow)
 		end
 	end
 end
+
+_update_keyboard_count(win::ODWindow) = _update_keyboard_count(get_inputs_state(win))
+_update_mousebutton_count(win::ODWindow) = _update_mousebutton_count(get_inputs_state(win))
+_update_mousemotion_count(win::ODWindow) = _update_mousemotion_count(get_inputs_state(win))
+_update_mousewheel_count(win::ODWindow) = _update_mousewheel_count(get_inputs_state(win))
 
 end #module
