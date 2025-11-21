@@ -265,7 +265,7 @@ _update_mousebutton_count(inp::InputState) = _update_count(getfield(inp,:MBState
 _update_mousemotion_count(inp::InputState) = _update_count(getfield(inp,:MMState))
 _update_mousewheel_count(inp::InputState) = _update_count(getfield(inp,:MWState))
 
-_update_keyboard_count(win) = _update_count(_get_input_state(win))
-_update_mousebutton_count(win) = _update_count(_get_input_state(win))
-_update_mousemotion_count(win) = _update_count(_get_input_state(win))
-_update_mousewheel_count(win) = _update_count(_get_input_state(win))
+_update_keyboard_count(win) = _update_count(get_inputs_data(win))
+_update_mousebutton_count(win) = _update_count(get_inputs_data(win))
+_update_mousemotion_count(win) = _update_count(get_inputs_data(win))
+_update_mousewheel_count(win) = _update_count(get_inputs_data(win))
