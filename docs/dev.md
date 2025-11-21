@@ -1,354 +1,231 @@
-# **Outdoors.jl Window Management API Documentation**
+# Implementing a New Window Style for the `Outdoors` Module
 
-This section documents the core window-management API of **Outdoors**, intended to be overloaded by backend implementations (SDL, GLFW, custom engines, etc.).
-Every function presented here is meant to be **dispatched on your custom window type** when you implement a new backend.
+This document provides a comprehensive guide for developers on how to implement a new window style (e.g., using GLFW, DirectX, or a custom API) within the existing **`Outdoors`** abstraction layer. This pattern ensures your application remains decoupled from the underlying windowing API.
 
-Most functions require you to emit specific notifications once the window operation succeeds.
+## I. Understanding the Core Architecture
 
----
+The `Outdoors` module uses a **Dispatch/Notification** pattern, centered around the abstract type `AbstractStyle`.
 
-## **Initialization**
+| Component | Purpose | Why It's Necessary |
+| :--- | :--- | :--- |
+| **`AbstractStyle`** (Generic) | The required supertype for any concrete window style implementation. | It enables **polymorphism**; all generic `Outdoors` functions are overloaded (dispatched) based on the concrete type inheriting this. |
+| **`ODWindow{T <: AbstractStyle}`** (Generic) | The generic container holding the style data (`data::T`), input state, and application reference. | Provides a **unified interface** for application logic, regardless of the underlying API (SDL, GLFW, etc.). |
+| **Notifications (`NOTIF_...`)** | The **Pub/Sub** system for notifying the application of successful actions or errors. | Ensures **decoupling**. The core `Outdoors` functions do not return the result; they emit a notification, allowing multiple listeners to react. |
 
-### InitOutdoor(::Type{AbstractStyle})`
+-----
 
-Initialize the Outdoors backend for the given window style.
+## II. Step-by-Step Implementation Guide
 
-```julia
-InitOutdoor(::Type{AbstractStyle})
-```
+To create a new window style, for instance, based on the **`[NewAPI]`** library, you must create a new module (e.g., `NewAPIOutdoors`) that extends and overloads the generic functions defined in `Outdoors`.
 
-When implementing your own window style, create a method dispatched on your style type.
+### Step 1: Define the Concrete Style Structure
 
-**Notification to emit:**
-
-* `NOTIF_OUTDOOR_INITED`
-
----
-
-## **Window Creation**
-
-### CreateWindow(::Type{AbstractStyle}, args...; kwargs...)`
-
-Create a new window with the given style.
+Create a new `mutable struct` inheriting from `Outdoors.AbstractStyle`. This is where all the API-specific data will reside.
 
 ```julia
-CreateWindow(::Type{AbstractStyle}, args...; kwargs...)
+using Outdoors
+using [YourNewAPIName] # e.g., using GLFW
+
+mutable struct NewAPIStyle <: Outdoors.AbstractStyle
+    # Mandatory: Ptr to the API's window object
+    window_handle :: Ptr{Cvoid} 
+    
+    # Optional: Renderer or context specific to the API
+    context :: Union{Nothing, Ptr{Cvoid}}
+    
+    # Cache fields for local state (width, height, title, etc.)
+    title :: String
+    width :: Integer
+    # ... other state fields ...
+end
+
+# Define a convenience alias
+const NewAPIWindow = Outdoors.ODWindow{NewAPIStyle}
 ```
 
-Backend styles must overload this method and return the created window instance.
+### Step 2: Implement API Lifecycle Functions
 
-**Notification to emit:**
+You must provide overloads for initialization and shutdown.
 
-* `NOTIF_WINDOW_CREATED`
+#### A. Initialization (`InitOutdoor`)
 
----
-
-## **Window Resizing / Movement**
-
-### ResizeWindow(app::ODWindow, width, height)`
-
-Resize a window.
+This function must initialize the underlying API and emit the success notification.
 
 ```julia
-ResizeWindow(app::ODWindow, width, height)
+function Outdoors.InitOutdoor(::Type{NewAPIStyle})
+    if NewAPI.init() # Call the new API's initialization function
+        Outdoors.NOTIF_OUTDOOR_INITED.emit(NewAPIStyle)
+        return true
+    else
+        # Critical failure: use NOTIF_ERROR
+        err = NewAPI.get_error()
+        Outdoors.NOTIF_ERROR.emit("NewAPI failed to initialize.", err)
+        return false
+    end
+end
 ```
 
-**Notification to emit:**
-
-* `NOTIF_WINDOW_RESIZED` with `(window, width, height)`
-
----
-
-### RepositionWindow(app::ODWindow, x, y)`
-
-Move a window to the given coordinates.
+#### B. Style and Window Quitting (`QuitStyle`, `QuitWindow`)
 
 ```julia
-RepositionWindow(app::ODWindow, x, y)
+# Quits a specific window
+function Outdoors.QuitWindow(app::NewAPIWindow)
+    style = Outdoors.GetStyle(app)
+    
+    # 1. Destroy all child windows associated with this window (handled by Outdoors)
+    Outdoors.DestroyChildWindow(app) 
+    
+    # 2. Call the API's destroy function
+    NewAPI.destroy_window(style.window_handle) 
+    
+    # 3. Notify the application
+    Outdoors.NOTIF_WINDOW_EXITTED.emit(app)
+end
+
+# Quits the entire style (e.g., cleans up global resources)
+function Outdoors.QuitStyle(::Type{NewAPIStyle})
+    NewAPI.quit()
+    Outdoors.NOTIF_OUTDOOR_STYLE_QUITTED.emit(NewAPIStyle)
+end
 ```
 
-**Notification to emit:**
+### Step 3: Implement Window Creation (`CreateWindow`)
 
-* `NOTIF_WINDOW_REPOSITIONED` with `(window, x, y)`
-
----
-
-### SetWindowTitle(app::ODWindow, new_title)`
-
-Set a window’s title.
+This is the most complex step as it involves creating the API object, wrapping it in the style, and registering it with the main `ODApp`.
 
 ```julia
-SetWindowTitle(app::ODWindow, new_title)
+function Outdoors.CreateWindow(app::Outdoors.ODApp, ::Type{NewAPIStyle}, title::String, w, h, x=0, y=0; kwargs...)
+    # 1. Translate abstract parameters into NewAPI flags/arguments
+    # ... (e.g., setting fullscreen, resizable flags for NewAPI)
+
+    # 2. Call the underlying API's create function
+    handle = NewAPI.create_window(title, w, h, x, y, flags)
+
+    if handle != C_NULL
+        # 3. Create the concrete style object
+        style = NewAPIStyle(handle, nothing, title, w, h, x, y)
+        
+        # 4. Create the generic ODWindow container
+        win = Outdoors.ODWindow{NewAPIStyle}(style) 
+        
+        # 5. Register the window with the ODApp (assigns ID and sets WeakRef)
+        Outdoors.add_to_app(app, win)
+        
+        # 6. Notify success (CRUCIAL)
+        Outdoors.NOTIF_WINDOW_CREATED.emit(win) 
+        return win
+    else
+        # 7. Notify failure
+        err = NewAPI.get_last_error()
+        Outdoors.NOTIF_ERROR.emit("NewAPI failed to create window.", err)
+        return nothing
+    end
+end
 ```
 
-**Notification to emit:**
+### Step 4: Implement Basic Window Actions
 
-* `NOTIF_WINDOW_TITLE_CHANGED` with `(window, new_title)`
+For every action, the implementation follows this pattern: **Get Style Data** → **Call API Function** → **Update Local State** → **Emit Notification**.
 
----
+| Generic Function | NewAPI Implementation Steps | Required Notification |
+| :--- | :--- | :--- |
+| `ResizeWindow` | 1. `NewAPI.set_size(handle, w, h)` 2. Update `style.width`, `style.height` | `NOTIF_WINDOW_RESIZED(win, w, h)` |
+| `SetWindowTitle` | 1. `NewAPI.set_title(handle, title)` 2. Update `style.title` | `NOTIF_WINDOW_TITLE_CHANGED(win, title)` |
+| `MaximizeWindow` | 1. `NewAPI.maximize(handle)` | `NOTIF_WINDOW_MAXIMIZED(win)` |
+| `HideWindow` | 1. `NewAPI.hide(handle)` 2. Update `style.shown = false` | `NOTIF_WINDOW_HIDDEN(win)` |
+| `GetWindowStyleID` | **Direct access:** `return style.id` (if API ID is stored there). | None (direct return) |
 
-## **Window State (Maximize / Minimize / Restore)**
+Check [API documentation](https://github.com/Gesee-y/Outdoors.jl/blob/main/docs/API.md) for deeper informations
 
-### MaximizeWindow(app::ODWindow)`
+-----
 
-Maximize the window to the screen.
+## III. Implementing Event and Input Management
+
+Event handling is the bridge between the API's raw input events and the normalized `InputState` of `Outdoors`.
+
+### Step 5: Implement `GetEvents`
+
+This is the main event loop function that reads events from the underlying API and dispatches them to specialized handlers.
 
 ```julia
-MaximizeWindow(app::ODWindow)
+function Outdoors.GetEvents(::Type{NewAPIStyle}, app::Outdoors.ODApp)
+    # 1. Reset 'just_pressed' and 'just_released' flags for all windows
+    for win in values(app.Windows)
+        Outdoors.reset(Outdoors.get_inputs_state(win))
+    end
+
+    # 2. Poll/Process all events from the NewAPI
+    while NewAPI.poll_event(event_ref) 
+        
+        # 3. Find the ODWindow associated with the event's window ID
+        api_id = NewAPI.get_event_window_id(event_ref)
+        win = Outdoors.GetWindowFromStyleID(app, NewAPIStyle, api_id)
+
+        # 4. Dispatch the raw event to handlers
+        if NewAPI.is_keyboard_event(event_ref)
+            HandleKeyboardInputs(win, event_ref)
+        elseif NewAPI.is_mouse_button_event(event_ref)
+            HandleMouseEvents(win, event_ref)
+        # ... and so on for mouse motion, window resizing, quit event, etc.
+        end
+    end
+end
 ```
 
-**Notification to emit:**
+### Step 6: Implement Input Conversion (`ConvertKey`)
 
-* `NOTIF_WINDOW_MAXIMIZED`
-
----
-
-### MinimizeWindow(app::ODWindow)`
-
-Minimize the window.
+This function is mandatory for abstracting keyboard inputs.
 
 ```julia
-MinimizeWindow(app::ODWindow)
+"""
+ConvertKey(::Type{NewAPIStyle}, key_code)
+
+Transforms the NewAPI's raw key code (physical or virtual) into an
+uniform string (e.g., 'A', 'SPACE', 'LSHIFT').
+"""
+function Outdoors.ConvertKey(::Type{NewAPIStyle}, key_code; physical=false)
+    # Use a lookup table or a conversion function based on the API's constants
+    if physical
+        # Translate key_code to standard string (e.g., KEY_CODE_A -> "A")
+    else
+        # Translate virtual key to standard string
+    end
+    return uppercase(standard_key_string)
+end
 ```
 
-**Notification to emit:**
+### Step 7: Implement Event Handlers (Example: Key Down)
 
-* `NOTIF_WINDOW_MINIMIZED`
-
----
-
-### RestoreWindow(app::ODWindow)`
-
-Restore a minimized window.
+Handlers translate raw API data into the normalized `Outdoors.KeyboardEvent` struct and update the window's `InputState`.
 
 ```julia
-RestoreWindow(app::ODWindow)
+function HandleKeyboardInputs(win::NewAPIWindow, event)
+    # Check if the event is a key down
+    if NewAPI.is_key_down(event)
+        
+        # 1. Update counter to track activity for the current frame
+        Outdoors._update_keyboard_count(win) 
+
+        # 2. Get normalized key name
+        key_code = NewAPI.get_key_code(event)
+        key_name = Outdoors.ConvertKey(NewAPIStyle, key_code)
+        
+        data = Outdoors.get_inputs_data(win)
+        Inputs = Outdoors.get_keyboard_data(data)
+
+        # 3. Determine if this is a 'just pressed' event
+        just_pressed = haskey(Inputs, key_name) ? !(Inputs[key_name].pressed) : true
+        
+        # 4. Create the normalized event object
+        key_ev = Outdoors.KeyboardEvent(key_code, key_name, just_pressed, true, false, false)
+        
+        # 5. Store the current state
+        Inputs[key_name] = key_ev
+
+        # 6. Notify the application
+        Outdoors.NOTIF_KEYBOARD_INPUT.emit(win, key_ev)
+    end
+end
 ```
 
-**Notification to emit:**
-
-* `NOTIF_WINDOW_RESTORED`
-
----
-
-## **Visibility Control**
-
-### HideWindow(app::ODWindow)`
-
-Hide the window.
-
-```julia
-HideWindow(app::ODWindow)
-```
-
-**Notification to emit:**
-
-* `NOTIF_WINDOW_HIDDEN`
-
----
-
-### ShowWindow(app::ODWindow)`
-
-Show the window.
-
-```julia
-ShowWindow(app::ODWindow)
-```
-
-**Notification to emit:**
-
-* `NOTIF_WINDOW_SHOWN`
-
----
-
-## **Z-Order / Fullscreen**
-
-### RaiseWindow(app::ODWindow)`
-
-Bring the window to the front.
-
-```julia
-RaiseWindow(app::ODWindow)
-```
-
-**Notification to emit:**
-
-* `NOTIF_WINDOW_RAISED`
-
----
-
-### SetFullscreen(app::ODWindow, active::Bool)`
-
-Enable or disable fullscreen.
-
-```julia
-SetFullscreen(app::ODWindow, active::Bool)
-```
-
-**Notification to emit:**
-
-* `NOTIF_WINDOW_FULLSCREEN` with `(window, active)`
-
----
-
-## **Window Updating**
-
-### UpdateWindow(app::ODWindow, args...)`
-
-Redraw or refresh a window.
-
-```julia
-UpdateWindow(app::ODWindow, args...)
-```
-
-**Notification to emit:**
-
-* `NOTIF_WINDOW_UPDATED`
-
----
-
-## **Error Handling**
-
-### GetError(app::ODWindow, args...)`
-
-Return the latest window-related error.
-
-```julia
-GetError(app::ODWindow, args...)
-```
-
-Backends should provide their own error system.
-
-Depending on severity, emit:
-
-* `NOTIF_INFO`
-* `NOTIF_WARNING`
-* `NOTIF_ERROR`
-
----
-
-## **Window Identification**
-
-### GetWindowID(app::ODWindow)`
-
-Return the unique numeric ID of the window.
-
-```julia
-GetWindowID(app::ODWindow)
-```
-
-Backends must set this field when creating windows.
-
----
-
-## **Window Quit / Shutdown**
-
-### QuitWindow(app::ODWindow)`
-
-Close a window.
-
-```julia
-QuitWindow(app::ODWindow)
-```
-
-**Notification to emit:**
-
-* `NOTIF_WINDOW_EXITTED`
-
----
-
-### QuitStyle(T::Type{AbstractStyle})`
-
-Notify that the given window style is shutting down.
-
-```julia
-QuitStyle(T::Type{AbstractStyle})
-```
-
-Emits:
-
-* `NOTIF_OUTDOOR_STYLE_QUITTED`
-
----
-
-### QuitOutdoor(app::ODApp)`
-
-Close **all windows**, destroy children, and shut down the Outdoors backend.
-
-```julia
-QuitOutdoor(app::ODApp)
-```
-
-Steps:
-
-1. Quit all top-level windows.
-2. Recursively destroy child windows.
-3. Emit shutdown event.
-
-**Notification to emit:**
-
-* `NOTIF_OUTDOOR_QUITTED`
-
----
-
-## **App & Window Utilities**
-
-### WindowCount()`
-
-Return the number of active windows.
-
-```julia
-WindowCount()
-```
-
----
-
-### GetStyle(app::ODWindow)`
-
-Return the backend-specific style data.
-
-```julia
-GetStyle(app::ODWindow)
-```
-
----
-
-### GetWindowFromStyleID(app::ODApp, style::Type, id::Integer)`
-
-Retrieve a window instances by its backend style and style-specific ID.
-
-```julia
-GetWindowFromStyleID(app::ODApp, style::Type{<:AbstractStyle}, id::Integer)
-```
-
----
-
-### AttribID(...)`
-
-Utility functions to create attribute IDs for window metadata.
-
-```julia
-AttribID(id::Integer)
-AttribID(id1::Tuple, id2::Integer)
-AttribID(app::ODWindow, id::Integer)
-```
-
----
-
-## **Window Tree Management**
-
-### add_to_app(app::ODApp, win::ODWindow; name="")`
-
-Add a newly created window to the application tree.
-
-* Creates a node in the window tree
-* Assigns a unique ID
-* Registers window in `app.Windows`
-
-```julia
-add_to_app(app::ODApp, win::ODWindow; name="")
-```
-
-When creating a windows with your own style, you should always call this somewhere after you created your windows.
-
----
+By following these steps, your `NewAPIOutdoors` module successfully implements the abstract interface, allowing the application to use its features simply by choosing the **`NewAPIStyle`** during initialization and creation.
