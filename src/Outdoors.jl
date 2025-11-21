@@ -16,7 +16,7 @@ export ContextType
 export AbstractStyle, ODWindow, ODApp
 
 export CreateWindow, ResizeWindow, RepositionWindow, QuitWindow, SetWindowTitle, SetFullscreen
-export GetError, UpdateWindow, WindowDelay, InitOutdoor, WindowCount
+export GetError, UpdateWindow, WindowDelay, InitOutdoor, WindowCount, ShowWindow, HideWindow
 export QuitStyle, QuitOutdoor, GetStyle, GetWindowID, GetWindowFromStyleID, GetStyleWindowID
 
 # --------- Notifications ----------- #

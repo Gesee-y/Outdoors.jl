@@ -1,6 +1,8 @@
 ## Structures for the event manager.
 
-export WindowEvents
+export WindowEvents, WINDOW_CLOSE, WINDOW_MOVED, WINDOW_SHOWN, WINDOW_HIDDEN, WINDOW_RESIZED, WINDOW_MAXIMIZED, WINDOW_RESTORED
+export WINDOW_MINIMIZED, WINDOW_HAVE_FOCUS, WINDOW_LOSE_FOCUS
+export _update_count, _update_keyboard_count, _update_mousewheel_count, _update_mousebutton_count, _update_mousemotion_count
 
 """
 	Abstract type Event

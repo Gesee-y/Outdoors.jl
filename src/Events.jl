@@ -7,6 +7,7 @@ export LeftClick, LeftDoubleClick, MiddleClick, MouseClickEvent, MouseMotionEven
 export EventLoop, GetEvents, GetMousePosition, GetAxis
 export IsKeyPressed, IsKeyReleased, IsMouseButtonPressed, IsMouseButtonReleased
 export IsKeyJustPressed, IsKeyJustReleased, IsMouseButtonJustPressed, IsMouseButtonJustReleased
+export get_inputs_data, get_keyboard_data, get_mousebutton_data, get_axes_data
 
 @Notifyer NOTIF_EVENT_RECEIVED(event,type)
 @Notifyer NOTIF_WINDOW_EVENT(win,ev,d1::Integer=0,d2::Integer=0)
