@@ -454,13 +454,6 @@ return the style data of an ODWindow object.
 """
 GetStyle(app::ODWindow) = getfield(app, :data)
 
-"""
-	GetWindowID(win::SDLWindow)
-
-Retunr the id of the SDL style window `win`
-"""
-GetWindowID(win::ODWindow) = getfield(win,:id)
-
 GetStyleWindowID(win::ODWindow) = error("Method not defined for this window style.") 
 
 function GetWindowFromStyleID(app::ODApp,style::Type{<:AbstractStyle}, id::Integer)
