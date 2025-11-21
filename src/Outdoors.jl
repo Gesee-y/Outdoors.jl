@@ -222,9 +222,9 @@ end
 struct ODApp
 	Windows::Dict{Int,ODWindow}
 	WindowTree :: ObjectTree
-	styles::Vector{AbstractStyle}
+	styles::Vector{Type{<:AbstractStyle}}
 
-	ODApp() = new(Dict{Int,ODWindow}(), ObjectTree(), AbstractStyle[])
+	ODApp() = new(Dict{Int,ODWindow}(), ObjectTree(), Type{<:AbstractStyle}[])
 end
 
 include("Events.jl")

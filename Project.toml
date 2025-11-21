@@ -1,7 +1,7 @@
 name = "Outdoors"
 uuid = "d3598698-a7e3-42d2-87cb-a7a1f294c746"
 authors = ["Talom Lael <gesee37@gmail.com>"]
-version = "0.6.4"
+version = "0.6.5"
 
 [deps]
 EventNotifiers = "de92ec2b-fb1f-40f8-8e84-3094df8dc533"
