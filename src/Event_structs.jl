@@ -1,5 +1,7 @@
 ## Structures for the event manager.
 
+export WindowEvents
+
 """
 	Abstract type Event
 

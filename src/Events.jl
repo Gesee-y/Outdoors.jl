@@ -214,7 +214,7 @@ QuitWindow(win)
 QuitOutdoor(SDLApp)
 ```
 """
-function EventLoop(app::ODApp)
+function EventLoop(app::ODApp, S)
 	wins = values(app.Windows)
 
 	for win in wins
@@ -222,7 +222,7 @@ function EventLoop(app::ODApp)
 		reset(state)
 	end
 	
-	GetEvents(SDLStyle,app)
+	GetEvents(S,app)
 
 	for win in wins
 		state = get_inputs_state(win)
