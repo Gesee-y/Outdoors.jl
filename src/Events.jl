@@ -215,7 +215,7 @@ QuitWindow(win)
 QuitOutdoor(SDLApp)
 ```
 """
-function EventLoop(app::ODApp, S)
+function EventLoop(app::ODApp)
 	wins = values(app.Windows)
 
 	for win in wins
