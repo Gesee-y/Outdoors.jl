@@ -222,8 +222,9 @@ end
 struct ODApp
 	Windows::Dict{Int,ODWindow}
 	WindowTree :: ObjectTree
+	styles::Vector{AbstractStyle}
 
-	ODApp() = new(Dict{Int,ODWindow}(), ObjectTree())
+	ODApp() = new(Dict{Int,ODWindow}(), ObjectTree(), AbstractStyle[])
 end
 
 include("Events.jl")
@@ -472,7 +473,7 @@ AttribID(id::Integer) = (id,)
 AttribID(id1::Tuple,id2::Integer) = tuple(id1...,id2)
 AttribID(app::ODWindow,id::Integer) = tuple(GetWindowID(win)...,id)
 
-function add_to_app(app::ODApp, win::ODWindow;name="")
+function add_to_app(app::ODApp, win::ODWindow{T};name="") where T <: AbstractStyle
 	Windows = getfield(app, :Windows)
 	Tree = getfield(app, :WindowTree)
 	
@@ -485,6 +486,8 @@ function add_to_app(app::ODApp, win::ODWindow;name="")
 	win.app = WeakRef(app)
 
 	Windows[new_id] = win
+
+	!(T in app.styles) && push!(app.styles, T)
 end
 
 function DestroyChildWindow(win::ODWindow)

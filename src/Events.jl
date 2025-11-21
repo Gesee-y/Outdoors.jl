@@ -223,7 +223,9 @@ function EventLoop(app::ODApp, S)
 		reset(state)
 	end
 	
-	GetEvents(S,app)
+	for S in app.styles
+	    GetEvents(S,app)
+	end
 
 	for win in wins
 		state = get_inputs_state(win)
